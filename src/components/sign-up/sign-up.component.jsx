@@ -5,7 +5,7 @@ import CustomButton from "../custom-button/custom-button.component";
 
 import { auth, createUserProfileDocument } from "../../firebase/firebase.utils";
 
-import "./sign-up.styles.scss";
+import { SignUpContainer, SignUpTitle } from "./sign-up.styles";
 
 class SignUp extends React.Component {
   constructor() {
@@ -25,7 +25,7 @@ class SignUp extends React.Component {
     const { displayName, email, password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
-      alert("Password don't match");
+      alert("passwords don't match");
       return;
     }
 
@@ -37,14 +37,14 @@ class SignUp extends React.Component {
 
       await createUserProfileDocument(user, { displayName });
 
-      this.setState = {
+      this.setState({
         displayName: "",
         email: "",
         password: "",
         confirmPassword: "",
-      };
+      });
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -56,12 +56,10 @@ class SignUp extends React.Component {
 
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
-
     return (
-      <div className="sign-up">
-        <h2 className="title">I do not have a account</h2>
+      <SignUpContainer>
+        <SignUpTitle>I do not have a account</SignUpTitle>
         <span>Sign up with your email and password</span>
-
         <form className="sign-up-form" onSubmit={this.handleSubmit}>
           <FormInput
             type="text"
@@ -83,7 +81,7 @@ class SignUp extends React.Component {
             type="password"
             name="password"
             value={password}
-            handleChange={this.handleChange}
+            onChange={this.handleChange}
             label="Password"
             required
           />
@@ -91,13 +89,13 @@ class SignUp extends React.Component {
             type="password"
             name="confirmPassword"
             value={confirmPassword}
-            handleChange={this.handleChange}
+            onChange={this.handleChange}
             label="Confirm Password"
             required
           />
           <CustomButton type="submit">SIGN UP</CustomButton>
         </form>
-      </div>
+      </SignUpContainer>
     );
   }
 }
